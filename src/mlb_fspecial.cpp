@@ -10,7 +10,7 @@ using namespace cv;
 
 //ÐÞ¸Ä
 int main(int argc, char **argv) {
-	Mat m=fspecial("gaussian",5,5,3);
+	Mat m=fspecial("gaussian",5,5,4);
 	for(int y=0;y<m.rows;y++){
 		float* data=m.ptr<float>(y);
 		for(int x=0;x<m.cols;x++)
