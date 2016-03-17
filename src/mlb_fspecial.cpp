@@ -7,6 +7,8 @@
 using namespace std;
 using namespace cv;
 
+
+//ÐÞ¸Ä
 int main(int argc, char **argv) {
 	Mat m=fspecial("gaussian",5,5,3);
 	for(int y=0;y<m.rows;y++){
