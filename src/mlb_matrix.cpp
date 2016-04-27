@@ -11,13 +11,24 @@ void showMat(Mat mat,int line){
 	int row =mat.rows;
 	int col= mat.cols;
 
-	for(int i=0;i<line;i++){
-		float* data=mat.ptr<float>(i);
-		for(int j=0;j<col;j++){
-			cout<<data[j]<<"  , ";
+	if(mat.type()==CV_32FC1){
+		for(int i=0;i<line;i++){
+			float* data=mat.ptr<float>(i);
+			for(int j=0;j<col;j++){
+				cout<<data[j]<<"  , ";
+			}
+			cout<<endl;
 		}
-		cout<<endl;
+	}else if(mat.type()==CV_8UC1){
+		for(int i=0;i<line;i++){
+			uchar* data=mat.ptr<uchar>(i);
+			for(int j=0;j<col;j++){
+				cout<<(int)data[j]<<" ,   ";
+			}
+			cout<<endl;
+		}
 	}
+
 }
 
 Mat conv2(const Mat & src,Mat &y,string flag){  //x -->src  ,y-->kernel
