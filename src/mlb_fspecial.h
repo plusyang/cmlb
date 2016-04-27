@@ -1,7 +1,13 @@
 
 #include <opencv2/opencv.hpp>
 #include<iostream>
-
+/**
+ * 生成核函数
+ * @param type 'gaussian'---->高斯窗函数
+ * @param m,n 矩阵size
+ * @param sigma
+ * @return
+ */
 cv::Mat fspecial(std::string type,int m,int n,int sigma){
 	cv::Mat resK;
 	if(type=="gaussian"){
