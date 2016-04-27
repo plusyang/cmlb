@@ -5,6 +5,11 @@
 using namespace std;
 using namespace cv;
 
+/**
+ * 显示mat
+ * @param mat
+ * @param line
+ */
 void showMat(Mat mat,int line){
 	int row =mat.rows;
 	int col= mat.cols;
@@ -18,10 +23,18 @@ void showMat(Mat mat,int line){
 	}
 }
 
-
-Mat conv2(Mat &x,Mat &y,string flag="full"){  //x -->src  ,y-->kernel
-	int x_r=x.rows;
-	int x_c=x.cols;
+/**
+ * 二维卷积(see matlab conv2)
+ * 边缘填充 0
+ * @param src  源
+ * @param kernel  核
+ * @param flag 卷积类型  full--->Returns the full two-dimensional convolution (default) , 返回mat大小为 src+kernel-1
+ * 					same--->Returns the central part of the convolution of the same size as A.
+ * @return
+ */
+Mat conv2(const Mat & src,Mat &y,string flag="full"){  //x -->src  ,y-->kernel
+	int x_r=src.rows;
+	int x_c=src.cols;
 	int y_r=y.rows;
 	int y_c=y.cols;
 
@@ -30,7 +43,7 @@ Mat conv2(Mat &x,Mat &y,string flag="full"){  //x -->src  ,y-->kernel
 	Mat z=Mat::zeros(z_r,z_c,CV_32FC1);
 
 	Mat x32;
-	x.convertTo(x32,CV_32FC1);
+	src.convertTo(x32,CV_32FC1);
 
 	Mat_<float> x_mat=x32;
 	Mat_<float> y_mat=y;
@@ -42,8 +55,6 @@ Mat conv2(Mat &x,Mat &y,string flag="full"){  //x -->src  ,y-->kernel
 			for(int m=0;m<y_r;m++){
 				for(int n=0;n<y_c;n++){
 					if( (i-m>=0)&&(i-m)<x_r && (j-n>=0)&&(j-n)<x_c ){
-//						if(y_r==7)
-//							cout<<"xxx " <<(double)x_mat(i-m,j-n)<<"   yyy "<<(double)y_mat(m,n)<<endl;
 						temp+=y_mat(m,n)*x_mat(i-m,j-n);
 					}
 				}
@@ -52,6 +63,7 @@ Mat conv2(Mat &x,Mat &y,string flag="full"){  //x -->src  ,y-->kernel
 		}
 	}
 
+	// flag=='same'
 	if(flag=="same"){
 		Mat roi=z_mat(Rect(y_c/2,y_r/2,x_c,x_r));
 		z=roi;
@@ -59,7 +71,13 @@ Mat conv2(Mat &x,Mat &y,string flag="full"){  //x -->src  ,y-->kernel
 	return z;
 }
 
-Mat filter2(Mat kernel,Mat & src){
+/**
+ * 二维滤波(see matlab filter)
+ * @param kernel
+ * @param src
+ * @return
+ */
+Mat filter2(Mat kernel, const Mat & src){
 
 	int krow=kernel.rows;
 	int kcol=kernel.cols;
