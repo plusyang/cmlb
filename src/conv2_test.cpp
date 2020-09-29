@@ -1,3 +1,6 @@
+//
+//
+//
 #include <stdio.h>
 #define N1 5      //信号1的行
 #define M1 5    //信号1的列
